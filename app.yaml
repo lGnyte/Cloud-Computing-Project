@@ -1,0 +1,11 @@
+# [START app_yaml]
+runtime: nodejs20
+
+service: sonorous-zone-419218
+
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
+
+# [END app_yaml]
