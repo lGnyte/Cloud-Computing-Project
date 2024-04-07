@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <main className="p-10">
-      <p>asdasd</p>
+      <p>Google Cloud deploy test</p>
     </main>
   );
 }
