@@ -1,7 +1,23 @@
+'use client';
+
+import Link from "next/link";
+import { UserContext } from "../lib/context";
+import { useContext } from "react";
+
 export default function Home() {
+  const { user, username } = useContext(UserContext);
+
   return (
+    
     <main className="p-10">
-      <p>Google Cloud deploy test 2</p>
+      <h1 className="text-2xl font-bold">{username ?
+        `Welcome back, ${username}!`
+        :
+        `No user`
+      }</h1>
+      <Link href={'/login'} className="text-blue-500">
+        Login
+      </Link>
     </main>
   );
 }
