@@ -48,7 +48,8 @@ export default function UsernameForm() {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="username">Create Username:</label>
-      <input type="text" name="username" id="username" className="px-2 py-1 bg-gray-300 rounded-md" value={formValue} onChange={handleChange} />
+      <br />
+      <input type="text" name="username" id="username" className="px-2 py-1 mr-2 bg-gray-300 rounded-md" value={formValue} onChange={handleChange} />
       <button type="submit" className="bg-gray-300 px-2 py-1 rounded-md">Submit</button>
     </form>
   )

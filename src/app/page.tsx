@@ -12,8 +12,9 @@ export default function Home() {
     <main className="p-10">
       {username ?
         <>
-          <h1 className="text-3xl font-bold">Welcome back, {username}!</h1>
-          <p className="text-xl">Start planning your next trip.</p>
+          <h1 className="text-3xl font-bold mb-3">Welcome back, {username}!</h1>
+          <p className="text-xl mb-2">Start planning your next trip.</p>
+          <Link href="/post" className="px-4 py-2 bg-gray-500 rounded-md text-lg text-white font-bold">Create a post</Link>
         </>
         :
         <>
