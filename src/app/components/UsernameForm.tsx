@@ -2,8 +2,9 @@
 
 import { UserContext } from "@/lib/context";
 import { db } from "@/lib/firebase";
-import { doc, writeBatch } from "firebase/firestore";
+import { doc, getDoc, writeBatch } from "firebase/firestore";
 import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function UsernameForm() {
   const [formValue, setFormValue] = useState('');
@@ -29,6 +30,13 @@ export default function UsernameForm() {
 
     const userDoc = doc(db, 'users', user.uid);
     const usernameDoc = doc(db, 'usernames', formValue);
+
+    // check if username exists
+    const usernameSnapshot = await getDoc(usernameDoc);
+    if (usernameSnapshot.exists()) {
+      toast.error('Username already exists');
+      return;
+    }
 
     const batch = writeBatch(db);
     batch.set(userDoc, {username: formValue});
