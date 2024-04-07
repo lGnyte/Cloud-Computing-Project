@@ -71,8 +71,6 @@ export default function NewPostForm() {
     toast.success(`Succesfully created new post ID: ${postRef.id}!`);
   }
 
-  const files = formValueImages ? [...formValueImages] : [];
-
   return (
     <form  onSubmit={handleSubmit}>
         <div className="flex flex-col p-20 m-10">
@@ -90,13 +88,6 @@ export default function NewPostForm() {
             <label htmlFor="photos">Photos:</label>
             <input className="px-20" type="file" id="photos" multiple accept="image/*" onChange={handleChangeImages}/>
           </fieldset>
-           <ul>
-            {files.map((file, i) => (
-              <li key={i}>
-                {file.name} - {file.type}
-              </li>
-            ))}
-          </ul>
           <div>
           <button type="submit" className="bg-gray-300 px-2 py-1 rounded-md">Submit</button>
           </div>
