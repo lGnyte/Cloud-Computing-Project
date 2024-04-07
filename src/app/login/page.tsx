@@ -5,7 +5,7 @@ import { UserContext } from "../../lib/context";
 import { auth } from "@/lib/firebase";
 import { useContext } from "react";
 import Link from "next/link";
-import UsernameForm from "../components/UsernameForm";
+import UsernameForm from "./UsernameForm";
 
 export default function Login() {
   const { user, username } = useContext(UserContext);

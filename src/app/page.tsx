@@ -3,21 +3,28 @@
 import Link from "next/link";
 import { UserContext } from "../lib/context";
 import { useContext } from "react";
+import PostsFeed from "@/components/PostsFeed";
 
 export default function Home() {
-  const { user, username } = useContext(UserContext);
+  const { username } = useContext(UserContext);
 
   return (
-    
     <main className="p-10">
-      <h1 className="text-2xl font-bold">{username ?
-        `Welcome back, ${username}!`
+      {username ?
+        <>
+          <h1 className="text-3xl font-bold">Welcome back, {username}!</h1>
+          <p className="text-xl">Start planning your next trip.</p>
+        </>
         :
-        `No user`
-      }</h1>
-      <Link href={'/login'} className="text-blue-500">
-        Login
-      </Link>
+        <>
+          <h1 className="text-3xl font-bold">Welcome to Turismo!</h1>
+          <p className="text-xl mb-2">Sign in to start planning your next trip</p>
+          <Link href="/login" className="px-4 py-2 bg-gray-500 rounded-md text-xl text-white font-bold">Sign in</Link>
+        </>
+      }
+      <hr className="my-10" />
+      <h2 className="text-2xl font-bold">Recent posts</h2>
+      <PostsFeed />
     </main>
   );
 }
