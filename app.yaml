@@ -1,7 +1,7 @@
 # [START app_yaml]
 runtime: nodejs20
 
-service: sonorous-zone-419218
+# service: sonorous-zone-419218 # Uncomment and replace with your service name if you want to use a specific service subdomain
 
 handlers:
   - url: /.*
