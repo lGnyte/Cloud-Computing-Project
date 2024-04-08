@@ -14,6 +14,7 @@ export default function Header() {
       <nav>
         <ul className="flex space-x-4">
           <li><Link href="/">Home</Link></li>
+          <li><Link href="/about">About Us</Link></li>
           {Object.keys(user).length > 0 ?
             <li className="cursor-pointer" onClick={() => auth.signOut()}>Sign out</li>
             :
