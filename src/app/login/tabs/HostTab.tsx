@@ -38,8 +38,8 @@ export default function HostForm() {
     }
 
     const batch = writeBatch(db);
-    batch.set(userDoc, {username: formValue});
-    batch.set(usernameDoc, {uid: user.uid, usertype: "host"});
+    batch.set(userDoc, {username: formValue, usertype: "host"});
+    batch.set(usernameDoc, {uid: user.uid});
 
     await batch.commit();
   }

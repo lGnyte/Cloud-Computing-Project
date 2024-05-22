@@ -7,7 +7,6 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import HostForm from './tabs/HostTab';
 import GuestForm from './tabs/GuestTab';
-import { act } from "react-dom/test-utils";
 
 
 export default function Login() {
@@ -29,7 +28,8 @@ export default function Login() {
       {Object.keys(user).length ? 
         username ?
           <div>
-            <h1 className="text-3xl font-bold mb-4">Welcome back, {username}!</h1>
+            { usertype == "host" ? <h1 className="text-3xl font-bold mb-4">Welcome landlord, {username}!</h1> :
+                <h1 className="text-3xl font-bold mb-4">Welcome special guest, {username}!</h1> }
             <button onClick={() => auth.signOut()} className="px-2 py-1 bg-gray-300 text-lg mb-2 rounded-md">Sign out</button>
             <br />
             <Link href={"/"} className="text-blue-500 text-lg">
