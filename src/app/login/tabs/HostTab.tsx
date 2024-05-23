@@ -6,16 +6,15 @@ import { doc, getDoc, writeBatch } from "firebase/firestore";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function UsernameForm() {
+export default function HostForm() {
   const [formValue, setFormValue] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const { user, username } = useContext(UserContext);
+  const { user, username, usertype } = useContext(UserContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.toLowerCase();
-    const regex = /^\w*$/;
+    const regex = /^[0-0A-Za-z_]+$/;
     if (val.length < 3) {
       setIsValid(false);
     }
@@ -39,18 +38,18 @@ export default function UsernameForm() {
     }
 
     const batch = writeBatch(db);
-    batch.set(userDoc, {username: formValue});
+    batch.set(userDoc, {username: formValue, usertype: "host"});
     batch.set(usernameDoc, {uid: user.uid});
 
     await batch.commit();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Create Username:</label>
+    <form onSubmit={handleSubmit} className="flex flex-col">
+      <label htmlFor="username" className="text-center text-xl my-5">Create Username</label>
       <br />
-      <input type="text" name="username" id="username" className="px-2 py-1 mr-2 bg-gray-300 rounded-md" value={formValue} onChange={handleChange} />
-      <button type="submit" className="bg-gray-300 px-2 py-1 rounded-md">Submit</button>
+      <input type="text" name="username" id="username" className="px-2 py-1 bg-gray-300 m-5 rounded-md" value={formValue} onChange={handleChange} />
+      <button type="submit" className="bg-gray-300 px-2 py-1 m-5 rounded-md">Submit</button>
     </form>
   )
 }

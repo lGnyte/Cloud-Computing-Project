@@ -7,6 +7,7 @@ import { db } from "./firebase";
 export function useUserData() {
   const [user, setUser] = useState({} as User);
   const [username, setUsername] = useState("");
+  const [usertype, setUsertype] = useState("");
 
   useEffect(() => {
     const auth = getAuth();
@@ -14,6 +15,7 @@ export function useUserData() {
       if (authUser) {
         setUser(authUser); //set the user => next useEffect triggers for the rest of the data
       } else { //no user -> reset everything
+        setUsertype("");
         setUsername("");
         setUser({} as User);
       }
@@ -26,15 +28,17 @@ export function useUserData() {
       if(user){
         unsubscribe = onSnapshot(doc(db, 'users', user.uid), doc => {
           setUsername(doc.data()?.username);
+          setUsertype(doc.data()?.usertype);
         }, err => {
           console.error(`Encountered error: ${err}`);
         });
       } else { //no record
         setUsername("");
+        setUsertype("");
       }
     }
     return unsubscribe;
   }, [user]);
 
-  return { user, username };
+  return { user, username, usertype };
 }
