@@ -6,14 +6,15 @@ import Link from "next/link";
 import { useContext } from "react";
 
 export default function Header() {
-  const { user } = useContext(UserContext);
+  const { user, usertype } = useContext(UserContext);
 
   return (
     <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
-      <Link href={"/"} className="text-2xl font-bold">[CC] Turismo</Link>
+      <Link href={"/"} className="text-2xl font-bold">Trek Trill</Link>
       <nav>
         <ul className="flex space-x-4">
           <li><Link href="/">Home</Link></li>
+          {usertype == "host" ? <li><Link href="/my_accommodations">My Accommodations</Link></li> : null }
           <li><Link href="/about">About Us</Link></li>
           {Object.keys(user).length > 0 ?
             <li className="cursor-pointer" onClick={() => auth.signOut()}>Sign out</li>

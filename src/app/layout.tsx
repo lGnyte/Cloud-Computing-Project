@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "[CC] Turismo",
+  title: "Trek Trill",
   description: "Find accommodation for you and your group of friends!",
 };
 
