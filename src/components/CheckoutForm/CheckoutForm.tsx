@@ -10,7 +10,7 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = React.useState(null);
+  const [message, setMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -27,6 +27,11 @@ export default function CheckoutForm() {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      if (!paymentIntent) {
+        setMessage("Something went wrong.");
+        return;
+      }
+
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -66,7 +71,7 @@ export default function CheckoutForm() {
     }
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -88,18 +93,14 @@ export default function CheckoutForm() {
           ? error.message
           : "An unexpected error occurred.";
 
-      setMessage(errorMessage);
+      setMessage(errorMessage || " ");
       setIsLoading(false);
     }
   };
 
-  const paymentElementOptions = {
-    layout: "tabs",
-  };
-
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <PaymentElement id="payment-element" />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
