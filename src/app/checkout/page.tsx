@@ -25,12 +25,8 @@ export default function Checkout() {
       });
   }, []);
 
-  const appearance = {
-    theme: "stripe",
-  };
   const options = {
     clientSecret,
-    appearance,
   };
 
   return (
