@@ -67,7 +67,7 @@ export default function LoginForm() {
               <button type="button" onClick={() => setIsRegistering(false)} className="text-blue-500">Log in</button>
             </p>
             :
-            <p className="text-sm font-semibold mt-4">Don't have an account?&nbsp;
+            <p className="text-sm font-semibold mt-4">Don&apos;t have an account?&nbsp;
               <button type="button" onClick={() => setIsRegistering(true)} className="text-blue-500">Sign up</button>
             </p>
           }
