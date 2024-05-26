@@ -34,8 +34,15 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
     (async () => { 
       const accommodationRef = await getDoc(doc(db, "accommodations", params.accommodationId));
       if (accommodationRef.exists()) {
-        setAccommodation(accommodationRef.data());
+        const accommodationData = accommodationRef.data();
+        if (accommodationData.uid == user.uid) {
+            setAccommodation(accommodationRef.data());
+        } else {
+            window.location.href = '/';
+        }
         setData(true);
+      } else {
+        window.location.href = '/'; 
       }
     })();
     if (accommodation) {
