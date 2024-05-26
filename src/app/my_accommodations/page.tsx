@@ -6,7 +6,7 @@ import { db } from '@/lib/firebase';
 import { UserContext } from '@/lib/context';
 import toast from 'react-hot-toast';
 import ConfirmationModal from '@/components/AsyncConfirmationModal';
-import HostCheck from '@/components/usertype_check/HostCheck';
+import AuthCheck from "@/components/AuthCheck";
 
 const MyAccommodations: React.FC = () => {
   const { user } = useContext(UserContext);
@@ -36,12 +36,12 @@ const MyAccommodations: React.FC = () => {
   };
 
   return (
-    <HostCheck> 
+    <AuthCheck usertype="host">
       <div className="container mx-auto">
         <div className="mt-8 mb-4">
-          <a href="/add_accommodation" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <Link href={"/add_accommodation"} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add accommodation
-          </a>
+          </Link>
         </div>
         <div>
           {accommodations.map((value) => (
@@ -75,7 +75,7 @@ const MyAccommodations: React.FC = () => {
           description="Are you sure you want to delete this accommodation? Operation cannot be undone!"
           />
       </div>
-    </HostCheck> 
+    </AuthCheck> 
   );
 };
 
