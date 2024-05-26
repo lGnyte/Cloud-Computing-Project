@@ -1,18 +1,25 @@
 'use client';
 
 import { UserContext } from "@/lib/context";
-import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
-export default function AuthCheck(props: {children: React.ReactNode}) {
-  const { user } = useContext(UserContext);
-  const router = useRouter();
+export default function AuthCheck(props: { children: React.ReactNode, usertype?: string }) {
+  const { user, usertype } = useContext(UserContext);
+  const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
-    if (Object.keys(user).length === 0){
-      router.push('/');
+    if (Object.keys(user).length > 0) {
+      setIsValid(true);
+      if (props.usertype && usertype !== props.usertype) {
+        setIsValid(false);
+      }
     }
-  }, [user]);
+  }, [user, usertype]);
 
-  return user ? <>{props.children}</> : null;
+  return Object.keys(user).length ? isValid ?
+      props.children
+      :
+      <div>You are not allowed to access this content</div>
+    :
+    <div>Loading...</div>;
 }
