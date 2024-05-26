@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 import { UserContext } from '@/lib/context';
 import { createHash } from "crypto";
 import ConfirmationModal from "@/components/AsyncConfirmationModal";
-import HostCheck from "@/components/usertype_check/HostCheck";
+import AuthCheck from "@/components/AuthCheck";
+import { useRouter } from "next/navigation";
 
 export default function AddAccommodation() {
   const [location, setLocation] = useState<string>('');
@@ -20,6 +21,7 @@ export default function AddAccommodation() {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
+  const router = useRouter();
 
   const handlePhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -70,6 +72,7 @@ export default function AddAccommodation() {
       setShowModal(false);
 
       toast.success("Successfully created accommodation!")
+      router.push('/my_accommodations');
     } catch (e) {
       toast.error("Could not create accommodation, contact Admin! Error: "+e);
     }
@@ -82,7 +85,7 @@ export default function AddAccommodation() {
 
 
   return (
-    <HostCheck>
+    <AuthCheck usertype="host">
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
           <h2 className="text-2xl font-bold mb-4">Add accommodation</h2>
@@ -168,6 +171,6 @@ export default function AddAccommodation() {
           description="Are you sure you want to submit this accommodation?"
           />
       </div>
-    </HostCheck>
+    </AuthCheck>
   );
 }
