@@ -75,8 +75,6 @@ const Reviews: React.FC<ReviewProps> = ({ accommodationId }) => {
     }
   };
 
-  console.log(username);
-
   return (
       <div className="mt-8">
       <h2 className="text-2xl font-bold mb-4">Leave a review</h2>
