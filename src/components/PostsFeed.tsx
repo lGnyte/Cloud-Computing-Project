@@ -2,13 +2,13 @@
 
 import { db } from "@/lib/firebase";
 import { DocumentData, collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
 import { BsCashCoin } from "react-icons/bs";
 
-export default function PostsFeed(props: {usertype?: string}) {
+export default function PostsFeed(props: {usertype?: string, setFeedPosts?: React.Dispatch<SetStateAction<any[]>>}) {
   const [posts, setPosts] = useState([] as DocumentData[]);
 
   useEffect(() => {
@@ -16,6 +16,9 @@ export default function PostsFeed(props: {usertype?: string}) {
       const querySnapshot = await getDocs(collection(db, 'accommodations'));
       const postsData = querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
       setPosts(postsData);
+      if(props.setFeedPosts) {
+        props.setFeedPosts(postsData)
+      }
     })();
   }, []);
 

@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { UserContext } from "../lib/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import PostsFeed from "@/components/PostsFeed";
+import BrowseAccommodations from "@/components/BrowseAccommodations";
 
 export default function Home() {
   const { username, usertype } = useContext(UserContext);
+  const [feedPosts, setFeedPosts] = useState([] as any[]);
 
   return (
     <main className="p-10">
@@ -33,7 +35,8 @@ export default function Home() {
       }
       <hr className="my-10" />
       <h2 className="text-2xl font-bold mb-6">Latest accommodations on Trek Trill</h2>
-      <PostsFeed usertype={usertype} />
+      {usertype === "guest" && <BrowseAccommodations posts={feedPosts} />}
+      <PostsFeed usertype={usertype} setFeedPosts={setFeedPosts} />
     </main>
   );
 }
