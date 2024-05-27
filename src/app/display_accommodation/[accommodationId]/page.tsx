@@ -65,8 +65,8 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
       const accommodationRef = await getDoc(doc(db, "accommodations", params.accommodationId));
       if (accommodationRef.exists()) {
         const accommodationData = accommodationRef.data();
-        if (accommodationData.uid == user.uid) {
-            setAccommodation(accommodationRef.data());
+        if (user.uid) {
+            setAccommodation(accommodationData);
         } 
         setData(true);
       }

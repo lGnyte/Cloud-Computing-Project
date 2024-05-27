@@ -6,7 +6,7 @@ import { useContext } from "react";
 import PostsFeed from "@/components/PostsFeed";
 
 export default function Home() {
-  const { username } = useContext(UserContext);
+  const { username, usertype } = useContext(UserContext);
 
   return (
     <main className="p-10">
@@ -24,8 +24,8 @@ export default function Home() {
         </>
       }
       <hr className="my-10" />
-      <h2 className="text-2xl font-bold mb-6">Latest accommodations</h2>
-      <PostsFeed />
+      <h2 className="text-2xl font-bold mb-6">Latest accommodations posted</h2>
+      <PostsFeed usertype={usertype} />
     </main>
   );
 }
