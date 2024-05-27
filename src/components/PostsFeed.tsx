@@ -10,7 +10,7 @@ export default function PostsFeed() {
 
   useEffect(() => {
     (async () => {
-      const querySnapshot = await getDocs(collection(db, 'posts'));
+      const querySnapshot = await getDocs(collection(db, 'accommodations'));
       const postsData = querySnapshot.docs.map(doc => doc.data());
       setPosts(postsData);
     })();
@@ -19,17 +19,20 @@ export default function PostsFeed() {
   return (
     <section className="grid grid-cols-3 gap-4">
       {posts.map((post, index) => {
-        if(!post.hasOwnProperty('post_title') || !post.hasOwnProperty('post_description')) {
-          return null;
-        }
-
         return (
           <div key={`post${index}`} className="bg-gray-100 p-4 rounded-md">
-            <h3 className="text-xl font-bold">{post.post_title}</h3>
-            <p className="text-lg">{post.post_description}</p>
-            {post?.images && post.images.length > 0 && post.images.map((image: string, jndex: number) => {
+            <h3 className="text-xl font-bold">{post.title}</h3>
+            <p className="text-lg">{post.description}</p>
+            {post?.photos && post.photos.length > 0 ?
+            post.photos.map((image: string, jndex: number) => {
               return <Image key={`${index}_img_${jndex}`} src={image} width={100} height={100} alt={`Image ${index + 1}`} className="inline-block" />
-            })}
+            })
+            :
+            <div className="w-[100px] h-[100px]">
+              <Image src={"/no-image.png"} width={80} height={80} alt="No Images" />
+            </div>
+            }
+            <p className="text-sm">Starting at: {post.price} RON per room</p>
           </div>
         )}
       )}

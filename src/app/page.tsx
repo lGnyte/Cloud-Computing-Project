@@ -18,13 +18,13 @@ export default function Home() {
         </>
         :
         <>
-          <h1 className="text-3xl font-bold">Welcome to Turismo!</h1>
-          <p className="text-xl mb-2">Sign in to start planning your next trip</p>
-          <Link href="/login" className="px-4 py-2 bg-gray-500 rounded-md text-xl text-white font-bold">Sign in</Link>
+          <h1 className="text-3xl font-bold">Welcome to Trek Trill!</h1>
+          <p className="text-xl mb-2">Sign in to start planning your next trip!</p>
+          <Link href="/login" className="px-4 py-2 bg-gray-800 hover:bg-gray-500 duration-200 rounded-md text-xl text-white font-bold">Sign in</Link>
         </>
       }
       <hr className="my-10" />
-      <h2 className="text-2xl font-bold">Recent posts</h2>
+      <h2 className="text-2xl font-bold mb-6">Latest accommodations</h2>
       <PostsFeed />
     </main>
   );
