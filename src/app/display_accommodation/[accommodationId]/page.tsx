@@ -4,10 +4,12 @@ import { db } from '@/lib/firebase';
 import { doc, getDoc, DocumentData, setDoc } from 'firebase/firestore';
 import { NextPage } from 'next';
 import { useContext, useEffect, useState } from 'react';
-import Accommodation from './accommodation';
+import Accommodation from './Accommodation';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import toast from 'react-hot-toast';
+import Reviews from './Reviews';
+import AuthCheck from '@/components/AuthCheck';
 
 interface DisplayAccommodationProps {
   params: {
@@ -65,9 +67,7 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
       const accommodationRef = await getDoc(doc(db, "accommodations", params.accommodationId));
       if (accommodationRef.exists()) {
         const accommodationData = accommodationRef.data();
-        if (accommodationData.uid == user.uid) {
-            setAccommodation(accommodationRef.data());
-        } 
+        setAccommodation(accommodationData);
         setData(true);
       }
     })();
@@ -75,7 +75,7 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
 
   return (
     <div className="max-w-4xl mx-auto p-5 flex flex-col">
-      <Accommodation accommodation={accommodation} />
+      <Accommodation accommodation={accommodation} accommodationId={params.accommodationId} />
       <div className="flex space-x-12 mt-4 pb-10 px-10" >
         <div className="flex-1">
           <label className="block mb-3 text-sm font-medium text-gray-700">Check-in Date:</label>
@@ -109,6 +109,9 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleAddToCart}>
          Add to Cart
       </button>
+      <AuthCheck usertype="guest" loadingMessage="You need to login to view the reviews..." notAllowedMessage="You need to login to view the reviews...">
+        <Reviews accommodationId={params.accommodationId} />
+      </AuthCheck>
     </div>
   );
 

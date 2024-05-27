@@ -3,7 +3,7 @@
 import { UserContext } from "@/lib/context";
 import { useContext, useEffect, useState } from "react";
 
-export default function AuthCheck(props: { children: React.ReactNode, usertype?: string }) {
+export default function AuthCheck(props: { children: React.ReactNode, usertype?: string, notAllowedMessage?: string, loadingMessage?: string }) {
   const { user, usertype } = useContext(UserContext);
   const [isValid, setIsValid] = useState(false);
 
@@ -19,7 +19,7 @@ export default function AuthCheck(props: { children: React.ReactNode, usertype?:
   return Object.keys(user).length ? isValid ?
       props.children
       :
-      <div>You are not allowed to access this content</div>
+      (props.notAllowedMessage ? <div>{props.notAllowedMessage}</div> : <div>You are not allowed to access this content</div>)
     :
-    <div>Loading...</div>;
+    (props.loadingMessage ? <div>{props.loadingMessage}</div> : <div>Loading...</div>);
 }
