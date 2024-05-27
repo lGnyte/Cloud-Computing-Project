@@ -27,7 +27,6 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
   const [accommodation, setAccommodation] = useState({} as DocumentData);
   const [receivedData, setData] = useState(false);
 
-
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -37,12 +36,12 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
         const accommodationData = accommodationRef.data();
         if (accommodationData.uid == user.uid) {
             setAccommodation(accommodationRef.data());
-        } else {
-            window.location.href = '/';
+        } else if (user.uid) {
+          window.location.href ="/"
         }
         setData(true);
       } else {
-        window.location.href = '/'; 
+        window.history.back()
       }
     })();
     if (accommodation) {
@@ -55,7 +54,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
       }
       setPrice(accommodation.price);
     }
-  }, [receivedData]);
+  }, [receivedData, user]);
 
 
   const handleFormSubmit = (e: FormEvent) => {
