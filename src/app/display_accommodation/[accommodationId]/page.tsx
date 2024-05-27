@@ -8,6 +8,7 @@ import Accommodation from './accommodation';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import toast from 'react-hot-toast';
+import AuthCheck from '@/components/AuthCheck';
 
 interface DisplayAccommodationProps {
   params: {
@@ -65,15 +66,14 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
       const accommodationRef = await getDoc(doc(db, "accommodations", params.accommodationId));
       if (accommodationRef.exists()) {
         const accommodationData = accommodationRef.data();
-        if (user.uid) {
-            setAccommodation(accommodationData);
-        } 
+        setAccommodation(accommodationData);
         setData(true);
       }
     })();
   }, [receivedData]);
 
   return (
+    <AuthCheck usertype='guest'>
     <div className="max-w-4xl mx-auto p-5 flex flex-col">
       <Accommodation accommodation={accommodation} />
       <div className="flex space-x-12 mt-4 pb-10 px-10" >
@@ -110,6 +110,7 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
          Add to Cart
       </button>
     </div>
+    </AuthCheck>
   );
 
 };
