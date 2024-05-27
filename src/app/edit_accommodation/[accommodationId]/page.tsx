@@ -122,7 +122,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
         description,
         numberOfRooms,
         price,
-        photos: images, // set the photos url
+        photos: photosUrls.concat(images), // set the photos url
       });
 
       // Reset the form
