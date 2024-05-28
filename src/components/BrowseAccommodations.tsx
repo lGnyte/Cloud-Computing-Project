@@ -22,10 +22,6 @@ export default function BrowseAccommodations(props: {posts: any[]}) {
     }))
   }, [debouncedQuery, props.posts])
 
-  useEffect(() => {
-    console.log("Filtered posts", filteredPosts)
-  }, [filteredPosts]);
-
   return (
     <div className="mb-10">
       <label className="text-lg mr-2" htmlFor="search">Browse by location or name:</label>

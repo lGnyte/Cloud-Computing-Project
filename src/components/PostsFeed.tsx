@@ -10,17 +10,18 @@ import { BsCashCoin } from "react-icons/bs";
 
 export default function PostsFeed(props: {usertype?: string, setFeedPosts?: React.Dispatch<SetStateAction<any[]>>}) {
   const [posts, setPosts] = useState([] as DocumentData[]);
+  const { usertype, setFeedPosts } = props
 
   useEffect(() => {
     (async () => {
       const querySnapshot = await getDocs(collection(db, 'accommodations'));
       const postsData = querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
       setPosts(postsData);
-      if(props.setFeedPosts) {
-        props.setFeedPosts(postsData)
+      if(setFeedPosts) {
+        setFeedPosts(postsData)
       }
     })();
-  }, [props]);
+  }, [setFeedPosts]);
 
   return (
     <section className="grid grid-cols-3 gap-4">
@@ -40,9 +41,9 @@ export default function PostsFeed(props: {usertype?: string, setFeedPosts?: Reac
               }
             </div>
             <p className="text-sm mb-4"><BsCashCoin className="inline-block" /> <strong>{post.price} RON</strong> per room</p>
-            {props.usertype === "guest" ?
+            {usertype === "guest" ?
               <Link href={`display_accommodation/${post.id}`} className="bg-gray-800 hover:bg-gray-500 rounded-md duration-200 px-4 py-2 text-white font-semibold mt-2">View Experience</Link>
-              : props.usertype !== "host" &&
+              : usertype !== "host" &&
               <button disabled className="px-2 py-1 bg-gray-300 cursor-not-allowed rounded-md">Sign In to view</button>
             }
           </div>
