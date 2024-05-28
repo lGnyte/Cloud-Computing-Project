@@ -1,41 +1,56 @@
 "use client";
-import React from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-
+import React, { useState } from "react";
 import CheckoutForm from "@/components/CheckoutForm/CheckoutForm";
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
-);
+const CheckoutPage: React.FC = () => {
+  const [selectedAccommodations, setSelectedAccommodations] = useState([
+    {
+      description: "Cealalata experienta misto de la noi mare tzeaca",
+      location: "Piatra Neamt",
+      numberOfRooms: 10,
+      photos: [
+        "https://firebasestorage.googleapis.com/v0/b/sonorous-zone-419218.appspot.com/o/accommodations%2Fbff30929cdea829e039b9495dd99fcceec7e73880901a475e67b26fb842b69cc.jpg?alt=media&token=db3e8b66-749c-4ba4-b530-ad14e586c3ff",
+      ],
+      price: 100,
+      title: "Alta experienta misto",
+      uid: "FhbkbIhB8RbwbjnFB6w0J1lBmjE3",
+    },
+    {
+      description: "Cealalata experienta misto de la noi mare tzeaca",
+      location: "Piatra Neamt",
+      numberOfRooms: 10,
+      photos: [
+        "https://firebasestorage.googleapis.com/v0/b/sonorous-zone-419218.appspot.com/o/accommodations%2Fbff30929cdea829e039b9495dd99fcceec7e73880901a475e67b26fb842b69cc.jpg?alt=media&token=db3e8b66-749c-4ba4-b530-ad14e586c3ff",
+      ],
+      price: 100,
+      title: "Alta experienta misto",
+      uid: "FhbkbIhB8RbwbjnFB6w0J1lBmjE3",
+    },
+    // Adauga alte acomodari selectate dupa cum este necesar
+  ]);
 
-export default function Checkout() {
-  const [clientSecret, setClientSecret] = React.useState("");
+  const handlePayment = () => {
+    console.log("Redirecting to payment page...");
 
-  React.useEffect(() => {
-    //Modify! -> data about products have to passed in the request
-    fetch("/api/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setClientSecret(data.clientSecret);
-      });
-  }, []);
+    const totalPrice = selectedAccommodations.reduce(
+      (accumulator, accommodation) => {
+        return accumulator + accommodation.price;
+      },
+      0
+    );
 
-  const options = {
-    clientSecret,
+    // call backend in order to calculate amount
+    window.location.href = "/payment";
   };
 
   return (
-    <div className="Checkout">
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
-      )}
+    <div>
+      <CheckoutForm
+        selectedAccommodations={selectedAccommodations}
+        onPayment={handlePayment}
+      />
     </div>
   );
-}
+};
+
+export default CheckoutPage;
