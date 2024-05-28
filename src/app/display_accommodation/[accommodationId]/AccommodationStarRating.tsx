@@ -27,7 +27,7 @@ const AccommodationStarRating: React.FC<AccommodationStarRatingProps> = ({ accom
       }
       setLoading(false);
     })();
-  }, [loading]);
+  }, [loading, accommodationId]);
 
   return (
     <div className="flex space-x-1">

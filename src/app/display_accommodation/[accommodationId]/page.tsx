@@ -71,7 +71,7 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
         setData(true);
       }
     })();
-  }, [receivedData]);
+  }, [receivedData, params.accommodationId]);
 
   return (
     <AuthCheck usertype='guest'>

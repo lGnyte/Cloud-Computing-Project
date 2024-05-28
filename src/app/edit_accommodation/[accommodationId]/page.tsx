@@ -8,6 +8,7 @@ import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import ConfirmationModal from '@/components/AsyncConfirmationModal';
 import { createHash } from 'crypto';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 interface EditAccommodationProps {
   params: {
@@ -54,7 +55,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
       }
       setPrice(accommodation.price);
     }
-  }, [receivedData, user]);
+  }, [receivedData, user, accommodation, params.accommodationId]);
 
 
   const handleFormSubmit = (e: FormEvent) => {
@@ -181,7 +182,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
             <div className="flex flex-wrap gap-2">
               {photosUrls.map((photo, index) => (
                 <div key={index} className="relative">
-                  <img src={photo} alt={`photo-${index}`} className="w-24 h-24 object-cover rounded" />
+                  <Image src={photo} alt={`photo-${index}`} className="w-24 h-24 object-cover rounded" />
                   <button
                     type="button"
                     className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"

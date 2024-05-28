@@ -20,7 +20,7 @@ export default function PostsFeed(props: {usertype?: string, setFeedPosts?: Reac
         props.setFeedPosts(postsData)
       }
     })();
-  }, []);
+  }, [props]);
 
   return (
     <section className="grid grid-cols-3 gap-4">

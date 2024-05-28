@@ -17,10 +17,10 @@ export default function BrowseAccommodations(props: {posts: any[]}) {
 
   useEffect(() => {
     setFilteredPosts(props.posts.filter((post) => {
-      return post.location.toLowerCase().includes(searchQuery) ||
-        post.title.toLowerCase().includes(searchQuery)
+      return post.location.toLowerCase().includes(debouncedQuery) ||
+        post.title.toLowerCase().includes(debouncedQuery)
     }))
-  }, [debouncedQuery])
+  }, [debouncedQuery, props.posts])
 
   useEffect(() => {
     console.log("Filtered posts", filteredPosts)

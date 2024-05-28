@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { DocumentData, collection, deleteDoc, doc, getDocs} from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -14,15 +14,16 @@ const MyAccommodations: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedAccommodationId, setSelectedAccommodationId] = useState("");
 
-  const handleGetAccommodations = async () => {
+  const handleGetAccommodations = useCallback(async () => {
       const querySnapshot = await getDocs(collection(db, 'accommodations'));
       const accommodations = querySnapshot.docs.filter(doc => (doc.get("uid") == user.uid)).map(doc => [doc.id, doc.data()]);
       setAccommodations(accommodations);
-  }
-
+  }, [user.uid])
+  
   useEffect(() => {
+
     handleGetAccommodations();
-  }, [user]); // add the user context as dependency
+  }, [user, handleGetAccommodations]); // add the user context as dependency
 
   const handleDeleteAccommodation = async (key: string) => {
     try {
@@ -48,7 +49,7 @@ const MyAccommodations: React.FC = () => {
         <div className='flex gap-6'>
           {!accommodations.length &&
             <div>
-              You don't have any experiences posted yet.
+              You don&apos;t have any experiences posted yet.
             </div>
           }
           {accommodations.map((value) => (
