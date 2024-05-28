@@ -9,14 +9,14 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
 );
 
-export default function Payment() {
+export default function Payment(props: { totalPrice: number }) {
   const [clientSecret, setClientSecret] = React.useState("");
 
   React.useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 100 }),
+      body: JSON.stringify({ amount: props.totalPrice }),
     })
       .then((res) => res.json())
       .then((data) => {

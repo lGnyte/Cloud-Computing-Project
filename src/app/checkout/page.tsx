@@ -1,8 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import CheckoutForm from "@/components/CheckoutForm/CheckoutForm";
+import Payment from "@/components/Payment";
 
 const CheckoutPage: React.FC = () => {
+  const [tab, setTab] = useState("checkout");
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const [selectedAccommodations, setSelectedAccommodations] = useState([
     {
       description: "Cealalata experienta misto de la noi mare tzeaca",
@@ -26,29 +30,30 @@ const CheckoutPage: React.FC = () => {
       title: "Alta experienta misto",
       uid: "FhbkbIhB8RbwbjnFB6w0J1lBmjE3",
     },
-    // Adauga alte acomodari selectate dupa cum este necesar
   ]);
 
   const handlePayment = () => {
     console.log("Redirecting to payment page...");
 
-    const totalPrice = selectedAccommodations.reduce(
+    setTotalPrice(selectedAccommodations.reduce(
       (accumulator, accommodation) => {
         return accumulator + accommodation.price;
       },
       0
-    );
-
-    // call backend in order to calculate amount
-    window.location.href = "/payment";
+    ));
+    setTab("payment");
   };
 
   return (
     <div>
-      <CheckoutForm
-        selectedAccommodations={selectedAccommodations}
-        onPayment={handlePayment}
-      />
+      {tab === "checkout" ? 
+        <CheckoutForm
+          selectedAccommodations={selectedAccommodations}
+          onPayment={handlePayment}
+        />
+        : tab === "payment" &&
+        <Payment totalPrice={totalPrice} />
+      }
     </div>
   );
 };
