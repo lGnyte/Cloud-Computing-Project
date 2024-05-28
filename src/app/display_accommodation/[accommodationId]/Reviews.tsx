@@ -25,7 +25,8 @@ const Reviews: React.FC<ReviewProps> = ({ accommodationId }) => {
   const [loading, setLoading] = useState(true);
   const { username } = useContext(UserContext);
 
-  const reloadReviews = async () => {
+  useEffect(() => {
+    const reloadReviews = async () => {
       const document = await getDoc(doc(db, 'reviews', accommodationId))
       if (document.exists()) {
         const documentData = document.data();
@@ -34,11 +35,10 @@ const Reviews: React.FC<ReviewProps> = ({ accommodationId }) => {
         setReviews([]);
       }
       setLoading(false);
-  };
+    };
 
-  useEffect(() => {
     reloadReviews();
-  }, [loading]);
+  }, [loading, accommodationId]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -68,7 +68,7 @@ const Reviews: React.FC<ReviewProps> = ({ accommodationId }) => {
       setRating(0);
       setReviewText('');
       setReviewTitle('');
-      reloadReviews();
+      setLoading(true);
       toast.success("Successfully submited review!");
     } catch (e) {
       toast.error("Could not submit error! Error: "+e);

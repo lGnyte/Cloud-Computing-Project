@@ -8,6 +8,7 @@ import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import ConfirmationModal from '@/components/AsyncConfirmationModal';
 import { createHash } from 'crypto';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 interface EditAccommodationProps {
   params: {
@@ -27,7 +28,6 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
   const [accommodation, setAccommodation] = useState({} as DocumentData);
   const [receivedData, setData] = useState(false);
 
-
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -37,12 +37,12 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
         const accommodationData = accommodationRef.data();
         if (accommodationData.uid == user.uid) {
             setAccommodation(accommodationRef.data());
-        } else {
-            window.location.href = '/';
+        } else if (user.uid) {
+          window.location.href ="/"
         }
         setData(true);
       } else {
-        window.location.href = '/'; 
+        window.history.back()
       }
     })();
     if (accommodation) {
@@ -55,7 +55,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
       }
       setPrice(accommodation.price);
     }
-  }, [receivedData]);
+  }, [receivedData, user, accommodation, params.accommodationId]);
 
 
   const handleFormSubmit = (e: FormEvent) => {
@@ -182,7 +182,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
             <div className="flex flex-wrap gap-2">
               {photosUrls.map((photo, index) => (
                 <div key={index} className="relative">
-                  <img src={photo} alt={`photo-${index}`} className="w-24 h-24 object-cover rounded" />
+                  <Image src={photo} alt={`photo-${index}`} className="w-24 h-24 object-cover rounded" />
                   <button
                     type="button"
                     className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"

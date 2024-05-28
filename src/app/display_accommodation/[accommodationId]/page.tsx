@@ -71,9 +71,10 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
         setData(true);
       }
     })();
-  }, [receivedData]);
+  }, [receivedData, params.accommodationId]);
 
   return (
+    <AuthCheck usertype='guest'>
     <div className="max-w-4xl mx-auto p-5 flex flex-col">
       <Accommodation accommodation={accommodation} accommodationId={params.accommodationId} />
       <div className="flex space-x-12 mt-4 pb-10 px-10" >
@@ -113,6 +114,7 @@ const DisplayAccommodation: NextPage<DisplayAccommodationProps> = ({ params }) =
         <Reviews accommodationId={params.accommodationId} />
       </AuthCheck>
     </div>
+    </AuthCheck>
   );
 
 };

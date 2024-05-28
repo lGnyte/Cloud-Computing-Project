@@ -14,7 +14,7 @@ export default function AuthCheck(props: { children: React.ReactNode, usertype?:
         setIsValid(false);
       }
     }
-  }, [user, usertype]);
+  }, [user, usertype, props.usertype]);
 
   return Object.keys(user).length ? isValid ?
       props.children
