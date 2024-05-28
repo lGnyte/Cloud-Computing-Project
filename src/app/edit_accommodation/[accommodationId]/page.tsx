@@ -182,7 +182,7 @@ const EditAccommodation: NextPage<EditAccommodationProps> = ({ params }) => {
             <div className="flex flex-wrap gap-2">
               {photosUrls.map((photo, index) => (
                 <div key={index} className="relative">
-                  <Image src={photo} alt={`photo-${index}`} className="w-24 h-24 object-cover rounded" />
+                  <Image src={photo} alt={`photo-${index}`} width="500" height="500" className="w-24 h-24 object-cover rounded" />
                   <button
                     type="button"
                     className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
