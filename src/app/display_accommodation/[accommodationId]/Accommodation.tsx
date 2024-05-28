@@ -1,14 +1,19 @@
 import { DocumentData } from 'firebase/firestore';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import AccommodationStarRating from './AccommodationStarRating';
+
+interface AccommodationProps {
+  accommodation: DocumentData,
+  accommodationId: string
+}
 
 
-const Accommodation: React.FC<DocumentData> = ({ accommodation }) => {
+const Accommodation: React.FC<AccommodationProps> = ({ accommodation, accommodationId }) => {
   const { photos, location, title, description, numberOfRooms, price } = accommodation;
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
   const handleNextPhoto = () => {
-    console.log('pressed!');
     setCurrentPhotoIndex((prevIndex) => (prevIndex + 1) % photos.length);
   };
 
@@ -19,6 +24,7 @@ const Accommodation: React.FC<DocumentData> = ({ accommodation }) => {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <h1 className="text-3xl">{title}</h1>
+      <AccommodationStarRating accommodationId={accommodationId} />
       <p><strong>Location:</strong> {location}</p>
       { photos ? 
       <div style={{ position: 'relative', marginBottom: '20px' }}>
