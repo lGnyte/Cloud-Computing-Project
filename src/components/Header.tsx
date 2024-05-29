@@ -17,7 +17,10 @@ export default function Header() {
           {usertype == "host" ? <li><Link href="/my_accommodations">My Accommodations</Link></li> : null }
           <li><Link href="/about">About Us</Link></li>
           {Object.keys(user).length > 0 ?
-            <li className="cursor-pointer" onClick={() => auth.signOut()}>Sign out</li>
+            <>
+              {usertype === "guest" && <li><Link href={"/checkout"}>Cart</Link></li>}
+              <li className="cursor-pointer" onClick={() => auth.signOut()}>Sign out</li>
+            </>
             :
             <li><Link href="/login">Sign in</Link></li>
           }
