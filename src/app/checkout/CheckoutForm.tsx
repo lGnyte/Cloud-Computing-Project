@@ -6,13 +6,15 @@ import React from "react";
 interface CheckoutFormProps {
   selectedAccommodations?: DocumentData[];
   onPayment: () => void;
-  totalPrice : number
+  totalPrice : number;
+  onRemoveFromCart: (id:string) => void;
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
   selectedAccommodations = [],
   totalPrice,
   onPayment,
+  onRemoveFromCart
 }) => {
   return (
     <div className="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
@@ -21,9 +23,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       </h2>
       {selectedAccommodations && selectedAccommodations.length > 0 ? (
         <div className="grid gap-6">
-          {selectedAccommodations.map((accommodation) => (
+          {selectedAccommodations.map((accommodation, index) => (
+            <div key={`${accommodation.id}`}>
             <div
-              key={accommodation.uid}
               className="flex items-center bg-gray-100 p-6 rounded-lg"
             >
               <Image
@@ -53,6 +55,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
                   <strong>Check-Out Date</strong> {`${new Date(accommodation.checkOut).toLocaleDateString("ro-RO") }`}
                 </p>
               </div>
+            </div>
+            <button onClick={() => onRemoveFromCart(accommodation.id)} className="px-4 py-1 bg-red-400 rounded-md hover:bg-red-300 duration-200 font-bold text-white">
+              Remove
+            </button>
             </div>
           ))}
         </div>

@@ -22,7 +22,7 @@ export default function Payment(props: { totalPrice: number }) {
       .then((data) => {
         setClientSecret(data.clientSecret);
       });
-  }, []);
+  }, [props.totalPrice]);
 
   const options = {
     clientSecret,
